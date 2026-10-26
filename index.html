@@ -3,10 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image to Short Link</title>
+
+<!-- FAVICON / IKON TAB BROWSER -->
+<link rel="icon" href="https://i.ibb.co/HfXFNG89/image-66.png" type="image/x-icon">
+
+<link rel="shortcut icon" href="https://i.ibb.co/HfXFNG89/image-66.png" type="image/x-icon">
+
+<title>IMAGE TO SHORT LINK</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -20,33 +28,45 @@ body {
     background: #020603;
 }
 
+/* BACKGROUND GAMBAR */
 .background {
     position: fixed;
     inset: 0;
     z-index: -2;
     background:
-        linear-gradient(rgba(0,8,3,.55), rgba(0,8,3,.72)),
+        linear-gradient(
+            rgba(0, 8, 3, 0.55),
+            rgba(0, 8, 3, 0.72)
+        ),
         url("https://tmpfiles.org/dl/1793003564.6f27b8b6d65cd2c5/wtA3VZSmU1vt/image23.jpg")
-        center / cover no-repeat;
+        center center / cover no-repeat;
 }
 
+/* CAHAYA HIJAU */
 .background::after {
     content: "";
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 10% 20%,
-        rgba(0,255,60,.28), transparent 35%),
-        radial-gradient(circle at 90% 80%,
-        rgba(0,255,120,.25), transparent 35%);
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 255, 60, 0.28),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(0, 255, 120, 0.25),
+            transparent 35%
+        );
     animation: cahaya 3s infinite alternate;
 }
 
 @keyframes cahaya {
-    from { opacity: .45; }
+    from { opacity: 0.45; }
     to { opacity: 1; }
 }
 
+/* BINGKAI NEON */
 .lampu {
     position: fixed;
     inset: 9px;
@@ -58,31 +78,38 @@ body {
 }
 
 @keyframes kedip {
-    from { box-shadow: 0 0 5px #39ff14; }
+    from {
+        box-shadow: 0 0 5px #39ff14;
+    }
     to {
-        box-shadow: 0 0 22px #39ff14,
-        inset 0 0 15px rgba(57,255,20,.3);
+        box-shadow:
+            0 0 22px #39ff14,
+            inset 0 0 15px rgba(57,255,20,.3);
     }
 }
 
+/* KARTU UTAMA */
 .container {
     width: 100%;
     max-width: 450px;
     position: relative;
     padding: 28px;
     text-align: center;
-    background: rgba(0,12,5,.88);
+    background: rgba(0, 12, 5, 0.88);
     border: 1px solid #39ff14;
     border-radius: 16px;
-    box-shadow: 0 0 12px #39ff14,
-                0 0 35px rgba(0,255,60,.3);
+    box-shadow:
+        0 0 12px #39ff14,
+        0 0 35px rgba(0,255,60,.3);
     backdrop-filter: blur(8px);
 }
 
 h2 {
     color: #39ff14;
-    text-shadow: 0 0 5px #39ff14,
-                 0 0 15px #00ff44;
+    text-shadow:
+        0 0 5px #39ff14,
+        0 0 15px #00ff44,
+        0 0 30px #00ff44;
     letter-spacing: 2px;
 }
 
@@ -91,7 +118,8 @@ p {
     overflow-wrap: anywhere;
 }
 
-input[type="file"], textarea {
+input[type="file"],
+textarea {
     width: 100%;
     margin-top: 15px;
     padding: 12px;
@@ -138,6 +166,7 @@ button:disabled {
     color: #a6d9ad;
 }
 
+/* PREVIEW GAMBAR */
 #preview {
     display: none;
     max-width: 100%;
@@ -151,12 +180,14 @@ button:disabled {
 </head>
 
 <body>
+
 <div class="background"></div>
 <div class="lampu"></div>
 
 <div class="container">
+
     <h2>IMAGE TO SHORT LINK</h2>
-    <p>UPLOAD GAMBAR • LINK PENDEK OTOMATIS</p>
+    <p>UPLOAD GAMBAR • DAPATKAN LINK PENDEK</p>
 
     <input type="file" id="gambar" accept="image/*">
 
@@ -168,13 +199,20 @@ button:disabled {
 
     <p id="status" aria-live="polite"></p>
 
-    <textarea id="hasil"
-        placeholder="Link pendek akan muncul di sini"
-        readonly></textarea>
+    <textarea
+        id="hasil"
+        placeholder="Link gambar akan muncul di sini"
+        readonly
+    ></textarea>
 
-    <button onclick="salinLink()">✦ SALIN LINK ✦</button>
+    <button id="salinBtn" onclick="salinLink()">
+        ✦ SALIN LINK ✦
+    </button>
 
-    <p class="note">Green Neon Image Hosting Tool</p>
+    <p class="note">
+        Green Neon Image Hosting Tool
+    </p>
+
 </div>
 
 <script>
@@ -186,6 +224,7 @@ const tombol = document.getElementById("uploadBtn");
 
 let previewURL = null;
 
+/* PREVIEW GAMBAR */
 inputGambar.addEventListener("change", function() {
     const file = this.files[0];
 
@@ -194,17 +233,20 @@ inputGambar.addEventListener("change", function() {
         previewURL = null;
     }
 
+    hasil.value = "";
+    statusEl.textContent = "";
+
     if (file && file.type.startsWith("image/")) {
         previewURL = URL.createObjectURL(file);
         preview.src = previewURL;
         preview.style.display = "block";
-        statusEl.textContent = "";
     } else {
         preview.removeAttribute("src");
         preview.style.display = "none";
     }
 });
 
+/* UPLOAD DAN PENDEK LINK */
 async function uploadGambar() {
     const file = inputGambar.files[0];
 
@@ -218,12 +260,12 @@ async function uploadGambar() {
         return;
     }
 
-    statusEl.textContent = "⚡ Mengunggah gambar...";
+    statusEl.textContent = "⚡ Sedang mengunggah gambar...";
     hasil.value = "";
     tombol.disabled = true;
 
     try {
-        // LANGKAH 1: UPLOAD GAMBAR KE TMPFILES
+        /* TAHAP 1: UPLOAD GAMBAR */
         const form = new FormData();
         form.append("file", file);
 
@@ -237,11 +279,15 @@ async function uploadGambar() {
 
         const data = await response.json();
 
-        if (!response.ok || !data.data || !data.data.url) {
+        if (
+            !response.ok ||
+            !data.data ||
+            !data.data.url
+        ) {
             throw new Error("Upload gambar gagal.");
         }
 
-        // LANGKAH 2: SIAPKAN URL GAMBAR
+        /* TAHAP 2: SIAPKAN LINK GAMBAR */
         const originalURL = data.data.url;
 
         const directURL = originalURL.replace(
@@ -250,9 +296,9 @@ async function uploadGambar() {
         );
 
         statusEl.textContent =
-            "✓ Gambar berhasil di-upload. Membuat link pendek...";
+            "✓ Upload berhasil. Membuat link pendek...";
 
-        // LANGKAH 3: BUAT LINK PENDEK OTOMATIS
+        /* TAHAP 3: MINTA LINK PENDEK */
         const shortResponse = await fetch(
             "https://zip1.io/api/create",
             {
@@ -268,31 +314,34 @@ async function uploadGambar() {
 
         const shortData = await shortResponse.json();
 
-        if (!shortResponse.ok || !shortData.short_url) {
-            throw new Error("Shortener gagal membuat link.");
+        if (
+            !shortResponse.ok ||
+            !shortData.short_url
+        ) {
+            throw new Error("API pemendek link gagal.");
         }
 
-        // LANGKAH 4: TAMPILKAN LINK PENDEK
+        /* TAHAP 4: TAMPILKAN HASIL */
         hasil.value = shortData.short_url;
 
         statusEl.textContent =
-            "✓ Berhasil! Link gambar sudah dipendekkan.";
+            "✓ Berhasil! Link pendek sudah dibuat.";
 
     } catch (error) {
-        console.error(error);
+        console.error("Kesalahan:", error);
 
         statusEl.textContent =
-            "⚠ Upload atau pemendekan link gagal. " +
-            "Periksa koneksi atau coba lagi.";
-
+            "⚠ Gagal membuat link pendek. " +
+            "Coba lagi atau periksa layanan API.";
     } finally {
         tombol.disabled = false;
     }
 }
 
+/* SALIN LINK */
 async function salinLink() {
     if (!hasil.value) {
-        alert("Belum ada link, bro! Upload gambar dulu.");
+        alert("Upload gambar dulu, bro!");
         return;
     }
 
@@ -305,13 +354,15 @@ async function salinLink() {
 
         const berhasil = document.execCommand("copy");
 
-        alert(
-            berhasil
-                ? "Link berhasil disalin, bro!"
-                : "Gagal menyalin. Silakan salin manual."
-        );
+        if (berhasil) {
+            alert("Link berhasil disalin, bro!");
+        } else {
+            alert("Salin link secara manual, bro!");
+        }
     }
 }
 </script>
+
 </body>
 </html>
+```
