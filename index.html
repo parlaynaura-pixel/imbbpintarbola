@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- FAVICON / IKON TAB BROWSER -->
-<link rel="icon" href="https://i.ibb.co/HfXFNG89/image-66.png" type="image/x-icon">
+<link rel="icon" href="https://blogger.googleusercontent.com/img/a/AVvXsEiS-q1ugYCZlsBiLzJzbpA_jruI6mVLodQkrim7uXuklj3rTne3BCk4Pj4O6GhqyeY5FZaupBVjB0WefrG5YfopB2v5GSJtpjwUu0NqQ1cCfuh49bAO0-stSjjiMDAPLGwlDKF36HMisyGcjjwtjboBKccSWoKQ9X_z_jIz8ZJ57Eqc9nU6uzZKcKQmvGQ" type="image/x-icon">
 
-<link rel="shortcut icon" href="https://i.ibb.co/HfXFNG89/image-66.png" type="image/x-icon">
+<link rel="shortcut icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoY7iwFAtaa4wpml7gMjhU8EFnEWSIQtE8HjIY8koC16FgR-dw7w1aOdQZpjOUkWlqCWbTvPmqHkFhKGETe_jykJylBh_INlir3GMrGxUuZgrhVMYU9vw-xlNSQGwTImyTRVDzJ1DcjfPt5405IkQNUWvu9Az_A0jbqhQFil3iPiPL1H4cE1fN0S9qHFQ/s320/A%20New%20Design%20-%20Dibuat%20dengan%20PosterMyWall%20(8).jpg" type="image/x-icon">
 
-<title>IMAGE TO SHORT LINK</title>
+<title>IMAGE TO DIRECT LINK</title>
 
 <style>
 * {
@@ -19,114 +18,111 @@
 body {
     margin: 0;
     min-height: 100vh;
-    padding: 35px 15px;
+    padding: 30px 15px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     font-family: Arial, sans-serif;
     color: white;
     background: #020603;
 }
 
-/* BACKGROUND GAMBAR */
 .background {
     position: fixed;
     inset: 0;
     z-index: -2;
     background:
         linear-gradient(
-            rgba(0, 8, 3, 0.55),
-            rgba(0, 8, 3, 0.72)
+            rgba(0, 8, 3, .55),
+            rgba(0, 8, 3, .75)
         ),
         url("https://tmpfiles.org/dl/1793003564.6f27b8b6d65cd2c5/wtA3VZSmU1vt/image23.jpg")
-        center center / cover no-repeat;
+        center / cover no-repeat;
 }
 
-/* CAHAYA HIJAU */
-.background::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(
-            circle at 10% 20%,
-            rgba(0, 255, 60, 0.28),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 90% 80%,
-            rgba(0, 255, 120, 0.25),
-            transparent 35%
-        );
-    animation: cahaya 3s infinite alternate;
-}
-
-@keyframes cahaya {
-    from { opacity: 0.45; }
-    to { opacity: 1; }
-}
-
-/* BINGKAI NEON */
-.lampu {
-    position: fixed;
-    inset: 9px;
-    z-index: 5;
-    border: 1px solid #39ff14;
-    box-shadow: 0 0 8px #39ff14;
-    pointer-events: none;
-    animation: kedip 2s infinite alternate;
-}
-
-@keyframes kedip {
-    from {
-        box-shadow: 0 0 5px #39ff14;
-    }
-    to {
-        box-shadow:
-            0 0 22px #39ff14,
-            inset 0 0 15px rgba(57,255,20,.3);
-    }
-}
-
-/* KARTU UTAMA */
 .container {
     width: 100%;
     max-width: 450px;
-    position: relative;
-    padding: 28px;
+    padding: 25px;
     text-align: center;
-    background: rgba(0, 12, 5, 0.88);
+    background: rgba(0, 12, 5, .92);
     border: 1px solid #39ff14;
     border-radius: 16px;
-    box-shadow:
-        0 0 12px #39ff14,
-        0 0 35px rgba(0,255,60,.3);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px #39ff14;
 }
 
 h2 {
     color: #39ff14;
-    text-shadow:
-        0 0 5px #39ff14,
-        0 0 15px #00ff44,
-        0 0 30px #00ff44;
-    letter-spacing: 2px;
+    text-shadow: 0 0 12px #39ff14;
+    overflow-wrap: anywhere;
 }
 
 p {
-    color: #c8ffd0;
     overflow-wrap: anywhere;
 }
 
 input[type="file"],
 textarea {
     width: 100%;
-    margin-top: 15px;
+    margin-top: 14px;
     padding: 12px;
     color: white;
-    background: rgba(0,0,0,.7);
-    border: 1px solid #22dd44;
+    background: #071009;
+    border: 1px solid #39ff14;
     border-radius: 8px;
+}
+
+#pasteArea {
+    margin-top: 15px;
+    padding: 22px 12px;
+    border: 2px dashed #39ff14;
+    border-radius: 10px;
+    color: #39ff14;
+    background: rgba(0, 30, 8, .6);
+    cursor: text;
+    outline: none;
+}
+
+#pasteArea:focus {
+    box-shadow: 0 0 15px #39ff14;
+}
+
+#pasteArea p {
+    margin-bottom: 0;
+    color: #c8ffd0;
+    font-size: 12px;
+}
+
+#preview {
+    display: none;
+    max-width: 100%;
+    max-height: 260px;
+    margin: 15px auto;
+    border: 1px solid #39ff14;
+    border-radius: 8px;
+    box-shadow: 0 0 12px #39ff14;
+}
+
+button {
+    width: 100%;
+    margin-top: 14px;
+    padding: 13px;
+    color: #001900;
+    background: #39ff14;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(57,255,20,.5);
+}
+
+button:hover {
+    background: #aaff99;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: wait;
 }
 
 textarea {
@@ -134,47 +130,15 @@ textarea {
     resize: vertical;
 }
 
-button {
-    width: 100%;
-    margin-top: 15px;
-    padding: 13px;
-    color: #001900;
-    background: #39ff14;
-    border: 1px solid #aaff99;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 0 12px rgba(57,255,20,.65);
-    transition: .25s;
-}
-
-button:hover {
-    background: #aaff99;
-    box-shadow: 0 0 25px #39ff14;
-    transform: translateY(-2px);
-}
-
-button:disabled {
-    opacity: .6;
-    cursor: wait;
-    transform: none;
+#status {
+    color: #39ff14;
+    font-size: 13px;
+    overflow-wrap: anywhere;
 }
 
 .note {
+    color: #b7d9bb;
     font-size: 12px;
-    color: #a6d9ad;
-}
-
-/* PREVIEW GAMBAR */
-#preview {
-    display: none;
-    max-width: 100%;
-    max-height: 220px;
-    margin: 15px auto 0;
-    border: 1px solid #39ff14;
-    border-radius: 8px;
-    box-shadow: 0 0 15px #00ff44;
 }
 </style>
 </head>
@@ -182,92 +146,152 @@ button:disabled {
 <body>
 
 <div class="background"></div>
-<div class="lampu"></div>
 
 <div class="container">
-
-    <h2>IMAGE TO SHORT LINK</h2>
-    <p>UPLOAD GAMBAR • DAPATKAN LINK PENDEK</p>
+    <h2>IMAGE TO DIRECT LINK</h2>
+    <p>UPLOAD GAMBAR • DAPATKAN LINK</p>
 
     <input type="file" id="gambar" accept="image/*">
 
+    <div id="pasteArea" tabindex="0" role="button"
+         aria-label="Paste screenshot Lightshot">
+        📸 PASTE SCREENSHOT LIGHTSHOT
+        <p>Klik di sini, lalu tekan CTRL + V</p>
+        <p>Pastikan Lightshot sudah menyalin gambarnya</p>
+    </div>
+
     <img id="preview" alt="Preview gambar">
 
-    <button id="uploadBtn" onclick="uploadGambar()">
+    <button id="uploadBtn" type="button">
         ⚡ UPLOAD GAMBAR ⚡
     </button>
 
     <p id="status" aria-live="polite"></p>
 
-    <textarea
-        id="hasil"
+    <textarea id="hasil"
         placeholder="Link gambar akan muncul di sini"
-        readonly
-    ></textarea>
+        readonly></textarea>
 
-    <button id="salinBtn" onclick="salinLink()">
-        ✦ SALIN LINK ✦
-    </button>
+    <button id="copyBtn" type="button">✦ SALIN LINK ✦</button>
 
-    <p class="note">
-        Green Neon Image Hosting Tool
-    </p>
-
+    <p class="note">GREEN NEON IMAGE HOSTING TOOL</p>
 </div>
 
 <script>
 const inputGambar = document.getElementById("gambar");
+const pasteArea = document.getElementById("pasteArea");
 const preview = document.getElementById("preview");
 const statusEl = document.getElementById("status");
 const hasil = document.getElementById("hasil");
 const tombol = document.getElementById("uploadBtn");
+const copyBtn = document.getElementById("copyBtn");
 
 let previewURL = null;
+let fileGambar = null;
 
-/* PREVIEW GAMBAR */
-inputGambar.addEventListener("change", function() {
-    const file = this.files[0];
+/* MENAMPILKAN GAMBAR */
+function tampilkanGambar(file, pesan) {
+    if (!file || !file.type.startsWith("image/")) {
+        statusEl.textContent = "⚠ File bukan gambar.";
+        return;
+    }
+
+    fileGambar = file;
 
     if (previewURL) {
         URL.revokeObjectURL(previewURL);
-        previewURL = null;
     }
 
-    hasil.value = "";
-    statusEl.textContent = "";
+    previewURL = URL.createObjectURL(file);
+    preview.src = previewURL;
+    preview.style.display = "block";
 
-    if (file && file.type.startsWith("image/")) {
-        previewURL = URL.createObjectURL(file);
-        preview.src = previewURL;
-        preview.style.display = "block";
-    } else {
-        preview.removeAttribute("src");
-        preview.style.display = "none";
+    hasil.value = "";
+    statusEl.textContent = pesan;
+}
+
+/* PILIH FILE GAMBAR */
+inputGambar.addEventListener("change", function() {
+    const file = this.files && this.files[0];
+
+    if (file) {
+        tampilkanGambar(file, "✓ Gambar siap di-upload, bro!");
     }
 });
 
-/* UPLOAD DAN PENDEK LINK */
+/* PASTE GAMBAR DARI CLIPBOARD */
+function prosesPaste(event) {
+    const clipboard = event.clipboardData;
+
+    if (!clipboard || !clipboard.items) {
+        statusEl.textContent =
+            "⚠ Clipboard tidak dapat dibaca. Coba salin screenshot lagi.";
+        return;
+    }
+
+    for (const item of clipboard.items) {
+        if (item.kind === "file" &&
+            item.type.startsWith("image/")) {
+
+            const file = item.getAsFile();
+
+            if (file) {
+                event.preventDefault();
+
+                tampilkanGambar(
+                    file,
+                    "✓ Screenshot berhasil ditempel! Siap upload."
+                );
+
+                return;
+            }
+        }
+    }
+
+    statusEl.textContent =
+        "⚠ Tidak ditemukan gambar di clipboard. Pastikan Lightshot menyalin gambar, bukan hanya link.";
+}
+
+/* AREA PASTE */
+pasteArea.addEventListener("click", function() {
+    pasteArea.focus();
+});
+
+pasteArea.addEventListener("paste", prosesPaste);
+
+/* PASTE DI HALAMAN */
+document.addEventListener("paste", function(event) {
+    const target = event.target;
+
+    if (
+        target === inputGambar ||
+        target === hasil ||
+        target.isContentEditable
+    ) {
+        return;
+    }
+
+    prosesPaste(event);
+});
+
+/* UPLOAD GAMBAR */
 async function uploadGambar() {
-    const file = inputGambar.files[0];
+    const file = fileGambar;
 
     if (!file) {
-        alert("Pilih gambar terlebih dahulu, bro!");
+        statusEl.textContent =
+            "⚠ Pilih gambar atau paste screenshot terlebih dahulu.";
+        pasteArea.focus();
         return;
     }
 
-    if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar!");
-        return;
-    }
-
-    statusEl.textContent = "⚡ Sedang mengunggah gambar...";
-    hasil.value = "";
     tombol.disabled = true;
+    statusEl.textContent = "⏳ Sedang upload gambar...";
+    hasil.value = "";
 
     try {
-        /* TAHAP 1: UPLOAD GAMBAR */
         const form = new FormData();
-        form.append("file", file);
+        form.append("file", file, file.name || "screenshot.png");
 
         const response = await fetch(
             "https://tmpfiles.org/api/v1/upload",
@@ -277,92 +301,63 @@ async function uploadGambar() {
             }
         );
 
-        const data = await response.json();
-
-        if (
-            !response.ok ||
-            !data.data ||
-            !data.data.url
-        ) {
-            throw new Error("Upload gambar gagal.");
+        if (!response.ok) {
+            throw new Error(
+                "Server upload merespons HTTP " + response.status
+            );
         }
 
-        /* TAHAP 2: SIAPKAN LINK GAMBAR */
-        const originalURL = data.data.url;
+        const data = await response.json();
 
-        const directURL = originalURL.replace(
+        if (!data.data || !data.data.url) {
+            throw new Error("URL gambar tidak ditemukan pada respons server.");
+        }
+
+        const directURL = data.data.url.replace(
             "https://tmpfiles.org/",
             "https://tmpfiles.org/dl/"
         );
 
-        statusEl.textContent =
-            "✓ Upload berhasil. Membuat link pendek...";
-
-        /* TAHAP 3: MINTA LINK PENDEK */
-        const shortResponse = await fetch(
-            "https://zip1.io/api/create",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    url: directURL
-                })
-            }
-        );
-
-        const shortData = await shortResponse.json();
-
-        if (
-            !shortResponse.ok ||
-            !shortData.short_url
-        ) {
-            throw new Error("API pemendek link gagal.");
-        }
-
-        /* TAHAP 4: TAMPILKAN HASIL */
-        hasil.value = shortData.short_url;
+        hasil.value = directURL;
 
         statusEl.textContent =
-            "✓ Berhasil! Link pendek sudah dibuat.";
+            "✓ Upload selesai! Link gambar tersedia di kotak hasil.";
 
     } catch (error) {
-        console.error("Kesalahan:", error);
+        console.error(error);
 
         statusEl.textContent =
-            "⚠ Gagal membuat link pendek. " +
-            "Coba lagi atau periksa layanan API.";
+            "⚠ Upload gagal. Periksa koneksi atau layanan hosting. Detail: " +
+            error.message;
     } finally {
         tombol.disabled = false;
     }
 }
 
+tombol.addEventListener("click", uploadGambar);
+
 /* SALIN LINK */
-async function salinLink() {
+copyBtn.addEventListener("click", async function() {
     if (!hasil.value) {
-        alert("Upload gambar dulu, bro!");
+        statusEl.textContent = "⚠ Belum ada link untuk disalin.";
         return;
     }
 
     try {
         await navigator.clipboard.writeText(hasil.value);
-        alert("Link berhasil disalin, bro!");
+        statusEl.textContent = "✓ Link berhasil disalin!";
     } catch (error) {
+        hasil.focus();
         hasil.select();
-        hasil.setSelectionRange(0, 99999);
 
-        const berhasil = document.execCommand("copy");
+        const copied = document.execCommand("copy");
 
-        if (berhasil) {
-            alert("Link berhasil disalin, bro!");
-        } else {
-            alert("Salin link secara manual, bro!");
-        }
+        statusEl.textContent = copied
+            ? "✓ Link berhasil disalin!"
+            : "Pilih dan salin link secara manual.";
     }
-}
+});
 </script>
 
 </body>
 </html>
-```
