@@ -8,7 +8,7 @@
 
 <link rel="shortcut icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoY7iwFAtaa4wpml7gMjhU8EFnEWSIQtE8HjIY8koC16FgR-dw7w1aOdQZpjOUkWlqCWbTvPmqHkFhKGETe_jykJylBh_INlir3GMrGxUuZgrhVMYU9vw-xlNSQGwTImyTRVDzJ1DcjfPt5405IkQNUWvu9Az_A0jbqhQFil3iPiPL1H4cE1fN0S9qHFQ/s320/A%20New%20Design%20-%20Dibuat%20dengan%20PosterMyWall%20(8).jpg" type="image/x-icon">
 
-<title>IMAGE TO DIRECT LINK</title>
+<title>IMAGE TO SHORT LINK</title>
 
 <style>
 * {
@@ -40,20 +40,32 @@ body {
         center / cover no-repeat;
 }
 
+.neon-frame {
+    position: fixed;
+    inset: 9px;
+    border: 1px solid #39ff14;
+    box-shadow: 0 0 10px #39ff14;
+    pointer-events: none;
+    z-index: 10;
+}
+
 .container {
     width: 100%;
     max-width: 450px;
     padding: 25px;
     text-align: center;
-    background: rgba(0, 12, 5, .92);
+    background: rgba(0, 12, 5, .93);
     border: 1px solid #39ff14;
     border-radius: 16px;
-    box-shadow: 0 0 15px #39ff14;
+    box-shadow:
+        0 0 15px #39ff14,
+        0 0 35px rgba(0,255,60,.2);
 }
 
 h2 {
     color: #39ff14;
     text-shadow: 0 0 12px #39ff14;
+    letter-spacing: 1px;
     overflow-wrap: anywhere;
 }
 
@@ -113,21 +125,26 @@ button {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    letter-spacing: 1px;
     box-shadow: 0 0 10px rgba(57,255,20,.5);
+    transition: .2s;
 }
 
 button:hover {
     background: #aaff99;
+    transform: translateY(-1px);
 }
 
 button:disabled {
     opacity: .6;
     cursor: wait;
+    transform: none;
 }
 
 textarea {
     height: 85px;
     resize: vertical;
+    overflow-wrap: anywhere;
 }
 
 #status {
@@ -146,13 +163,17 @@ textarea {
 <body>
 
 <div class="background"></div>
+<div class="neon-frame"></div>
 
 <div class="container">
-    <h2>IMAGE TO DIRECT LINK</h2>
-    <p>UPLOAD GAMBAR • DAPATKAN LINK</p>
 
+    <h2>IMAGE TO SHORT LINK</h2>
+    <p>UPLOAD GAMBAR • DAPATKAN LINK PENDEK</p>
+
+    <!-- PILIH GAMBAR DARI KOMPUTER -->
     <input type="file" id="gambar" accept="image/*">
 
+    <!-- PASTE SCREENSHOT LIGHTSHOT -->
     <div id="pasteArea" tabindex="0" role="button"
          aria-label="Paste screenshot Lightshot">
         📸 PASTE SCREENSHOT LIGHTSHOT
@@ -160,21 +181,30 @@ textarea {
         <p>Pastikan Lightshot sudah menyalin gambarnya</p>
     </div>
 
+    <!-- PREVIEW GAMBAR -->
     <img id="preview" alt="Preview gambar">
 
+    <!-- TOMBOL UPLOAD -->
     <button id="uploadBtn" type="button">
-        ⚡ UPLOAD GAMBAR ⚡
+        ⚡ UPLOAD & BUAT LINK PENDEK ⚡
     </button>
 
-    <p id="status" aria-live="polite"></p>
+    <p id="status" aria-live="polite">
+        Siap menerima gambar, bro!
+    </p>
 
+    <!-- HASIL LINK -->
     <textarea id="hasil"
-        placeholder="Link gambar akan muncul di sini"
+        placeholder="Link pendek zip1.io akan muncul di sini"
         readonly></textarea>
 
-    <button id="copyBtn" type="button">✦ SALIN LINK ✦</button>
+    <!-- SALIN LINK -->
+    <button id="copyBtn" type="button">
+        ✦ SALIN LINK ✦
+    </button>
 
     <p class="note">GREEN NEON IMAGE HOSTING TOOL</p>
+
 </div>
 
 <script>
@@ -189,10 +219,10 @@ const copyBtn = document.getElementById("copyBtn");
 let previewURL = null;
 let fileGambar = null;
 
-/* MENAMPILKAN GAMBAR */
+/* TAMPILKAN GAMBAR */
 function tampilkanGambar(file, pesan) {
     if (!file || !file.type.startsWith("image/")) {
-        statusEl.textContent = "⚠ File bukan gambar.";
+        statusEl.textContent = "⚠ File harus berupa gambar.";
         return;
     }
 
@@ -210,16 +240,19 @@ function tampilkanGambar(file, pesan) {
     statusEl.textContent = pesan;
 }
 
-/* PILIH FILE GAMBAR */
+/* PILIH GAMBAR DARI KOMPUTER */
 inputGambar.addEventListener("change", function() {
     const file = this.files && this.files[0];
 
     if (file) {
-        tampilkanGambar(file, "✓ Gambar siap di-upload, bro!");
+        tampilkanGambar(
+            file,
+            "✓ Gambar siap di-upload, bro!"
+        );
     }
 });
 
-/* PASTE GAMBAR DARI CLIPBOARD */
+/* PASTE GAMBAR DARI LIGHTSHOT */
 function prosesPaste(event) {
     const clipboard = event.clipboardData;
 
@@ -230,9 +263,10 @@ function prosesPaste(event) {
     }
 
     for (const item of clipboard.items) {
-        if (item.kind === "file" &&
-            item.type.startsWith("image/")) {
-
+        if (
+            item.kind === "file" &&
+            item.type.startsWith("image/")
+        ) {
             const file = item.getAsFile();
 
             if (file) {
@@ -249,7 +283,7 @@ function prosesPaste(event) {
     }
 
     statusEl.textContent =
-        "⚠ Tidak ditemukan gambar di clipboard. Pastikan Lightshot menyalin gambar, bukan hanya link.";
+        "⚠ Clipboard tidak berisi gambar. Salin screenshot sebagai gambar, bukan URL.";
 }
 
 /* AREA PASTE */
@@ -259,11 +293,12 @@ pasteArea.addEventListener("click", function() {
 
 pasteArea.addEventListener("paste", prosesPaste);
 
-/* PASTE DI HALAMAN */
+/* PASTE DI AREA HALAMAN LAIN */
 document.addEventListener("paste", function(event) {
     const target = event.target;
 
     if (
+        target === pasteArea ||
         target === inputGambar ||
         target === hasil ||
         target.isContentEditable
@@ -274,7 +309,7 @@ document.addEventListener("paste", function(event) {
     prosesPaste(event);
 });
 
-/* UPLOAD GAMBAR */
+/* UPLOAD GAMBAR DAN BUAT LINK PENDEK */
 async function uploadGambar() {
     const file = fileGambar;
 
@@ -286,14 +321,22 @@ async function uploadGambar() {
     }
 
     tombol.disabled = true;
-    statusEl.textContent = "⏳ Sedang upload gambar...";
+    copyBtn.disabled = true;
     hasil.value = "";
 
     try {
-        const form = new FormData();
-        form.append("file", file, file.name || "screenshot.png");
+        /* LANGKAH 1: UPLOAD KE TMPFILES */
+        statusEl.textContent =
+            "⏳ Langkah 1/2: Upload gambar...";
 
-        const response = await fetch(
+        const form = new FormData();
+        form.append(
+            "file",
+            file,
+            file.name || "screenshot.png"
+        );
+
+        const uploadResponse = await fetch(
             "https://tmpfiles.org/api/v1/upload",
             {
                 method: "POST",
@@ -301,36 +344,74 @@ async function uploadGambar() {
             }
         );
 
-        if (!response.ok) {
+        if (!uploadResponse.ok) {
             throw new Error(
-                "Server upload merespons HTTP " + response.status
+                "Upload gambar gagal. HTTP " +
+                uploadResponse.status
             );
         }
 
-        const data = await response.json();
+        const uploadData = await uploadResponse.json();
 
-        if (!data.data || !data.data.url) {
-            throw new Error("URL gambar tidak ditemukan pada respons server.");
+        if (!uploadData.data || !uploadData.data.url) {
+            throw new Error(
+                "Hosting tidak mengembalikan URL gambar."
+            );
         }
 
-        const directURL = data.data.url.replace(
+        const directURL = uploadData.data.url.replace(
             "https://tmpfiles.org/",
             "https://tmpfiles.org/dl/"
         );
 
-        hasil.value = directURL;
+        /* LANGKAH 2: PENDEKKAN LINK ZIP1.IO */
+        statusEl.textContent =
+            "⏳ Langkah 2/2: Membuat link pendek zip1.io...";
+
+        const shortResponse = await fetch(
+            "https://zip1.io/api/create",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    url: directURL
+                })
+            }
+        );
+
+        const shortData = await shortResponse.json();
+
+        if (!shortResponse.ok) {
+            throw new Error(
+                "Zip1.io menolak permintaan. HTTP " +
+                shortResponse.status
+            );
+        }
+
+        if (!shortData.short_url) {
+            throw new Error(
+                "Respons zip1.io tidak berisi short_url. Periksa API layanan."
+            );
+        }
+
+        /* TAMPILKAN LINK PENDEK */
+        hasil.value = shortData.short_url;
 
         statusEl.textContent =
-            "✓ Upload selesai! Link gambar tersedia di kotak hasil.";
+            "✓ BERHASIL! Link pendek siap disalin, bro!";
 
     } catch (error) {
-        console.error(error);
+        console.error("Upload/shortener error:", error);
 
         statusEl.textContent =
-            "⚠ Upload gagal. Periksa koneksi atau layanan hosting. Detail: " +
-            error.message;
+            "⚠ " + error.message +
+            " Jika Failed to fetch, kemungkinan API/CORS tidak mengizinkan permintaan dari halaman ini.";
+
     } finally {
         tombol.disabled = false;
+        copyBtn.disabled = false;
     }
 }
 
@@ -339,13 +420,15 @@ tombol.addEventListener("click", uploadGambar);
 /* SALIN LINK */
 copyBtn.addEventListener("click", async function() {
     if (!hasil.value) {
-        statusEl.textContent = "⚠ Belum ada link untuk disalin.";
+        statusEl.textContent =
+            "⚠ Belum ada link untuk disalin.";
         return;
     }
 
     try {
         await navigator.clipboard.writeText(hasil.value);
-        statusEl.textContent = "✓ Link berhasil disalin!";
+        statusEl.textContent =
+            "✓ Link berhasil disalin!";
     } catch (error) {
         hasil.focus();
         hasil.select();
