@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image to Direct Link</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 35px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: #020603;
+}
+
+/* BACKGROUND GAMBAR SENDIRI */
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+        linear-gradient(
+            rgba(0, 8, 3, 0.55),
+            rgba(0, 8, 3, 0.72)
+        ),
+        url("https://tmpfiles.org/dl/1793003564.6f27b8b6d65cd2c5/wtA3VZSmU1vt/image23.jpg") center center / cover no-repeat;
+}
+
+/* CAHAYA HIJAU BERGERAK */
+.background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 255, 60, 0.28),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(0, 255, 120, 0.25),
+            transparent 35%
+        );
+    animation: cahaya 3s infinite alternate;
+}
+
+@keyframes cahaya {
+    from { opacity: 0.45; }
+    to { opacity: 1; }
+}
+
+/* BINGKAI LAMPU */
+.lampu {
+    position: fixed;
+    inset: 9px;
+    z-index: 5;
+    border: 1px solid #39ff14;
+    box-shadow:
+        0 0 8px #39ff14,
+        inset 0 0 8px rgba(57,255,20,.3);
+    pointer-events: none;
+    animation: kedip 2s infinite alternate;
+}
+
+@keyframes kedip {
+    from {
+        box-shadow: 0 0 5px #39ff14;
+    }
+    to {
+        box-shadow:
+            0 0 22px #39ff14,
+            inset 0 0 15px rgba(57,255,20,.3);
+    }
+}
+
+/* KARTU UTAMA */
+.container {
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    padding: 28px;
+    text-align: center;
+    background: rgba(0, 12, 5, 0.82);
+    border: 1px solid #39ff14;
+    border-radius: 16px;
+    box-shadow:
+        0 0 12px #39ff14,
+        0 0 35px rgba(0,255,60,.3);
+    backdrop-filter: blur(8px);
+}
+
+h2 {
+    color: #39ff14;
+    text-shadow:
+        0 0 5px #39ff14,
+        0 0 15px #00ff44,
+        0 0 30px #00ff44;
+    letter-spacing: 2px;
+}
+
+p {
+    color: #c8ffd0;
+    overflow-wrap: anywhere;
+}
+
+input[type="file"],
+textarea {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    color: white;
+    background: rgba(0,0,0,.7);
+    border: 1px solid #22dd44;
+    border-radius: 8px;
+}
+
+textarea {
+    height: 85px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 13px;
+    color: #001900;
+    background: #39ff14;
+    border: 1px solid #aaff99;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px rgba(57,255,20,.65);
+    transition: .25s;
+}
+
+button:hover {
+    background: #aaff99;
+    box-shadow: 0 0 25px #39ff14;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none;
+}
+
+.note {
+    font-size: 12px;
+    color: #a6d9ad;
+}
+
+/* PREVIEW GAMBAR YANG DIPILIH */
+#preview {
+    display: none;
+    max-width: 100%;
+    max-height: 220px;
+    margin: 15px auto 0;
+    border: 1px solid #39ff14;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #00ff44;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="lampu"></div>
+
+<div class="container">
+    <h2>IMAGE TO DIRECT LINK</h2>
+    <p>UPLOAD GAMBAR • DAPATKAN LINK</p>
+
+    <input type="file" id="gambar" accept="image/*">
+
+    <img id="preview" alt="Preview gambar">
+
+    <button id="uploadBtn" onclick="uploadGambar()">
+        ⚡ UPLOAD GAMBAR ⚡
+    </button>
+
+    <p id="status" aria-live="polite"></p>
+
+    <textarea id="hasil"
+        placeholder="Link gambar akan muncul di sini"
+        readonly></textarea>
+
+    <button onclick="salinLink()">✦ SALIN LINK ✦</button>
+
+    <p class="note">
+        Green Neon Image Hosting Tool
+    </p>
+</div>
+
+<script>
+const inputGambar = document.getElementById("gambar");
+const preview = document.getElementById("preview");
+
+inputGambar.addEventListener("change", function() {
+    const file = this.files[0];
+
+    if (file && file.type.startsWith("image/")) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    } else {
+        preview.style.display = "none";
+    }
+});
+
+async function uploadGambar() {
+    const file = inputGambar.files[0];
+    const status = document.getElementById("status");
+    const hasil = document.getElementById("hasil");
+    const tombol = document.getElementById("uploadBtn");
+
+    if (!file) {
+        alert("Pilih gambar terlebih dahulu, bro!");
+        return;
+    }
+
+    status.textContent = "⚡ Sedang mengunggah gambar...";
+    hasil.value = "";
+    tombol.disabled = true;
+
+    try {
+        const form = new FormData();
+        form.append("file", file);
+
+        const response = await fetch(
+            "https://tmpfiles.org/api/v1/upload",
+            {
+                method: "POST",
+                body: form
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.data || !data.data.url) {
+            throw new Error("Upload gagal");
+        }
+
+        const link = data.data.url.replace(
+            "https://tmpfiles.org/",
+            "https://tmpfiles.org/dl/"
+        );
+
+        hasil.value = link;
+        status.textContent = "✓ Upload berhasil, bro!";
+
+    } catch (error) {
+        status.textContent =
+            "Upload gagal. Coba lagi atau periksa layanan hosting.";
+    } finally {
+        tombol.disabled = false;
+    }
+}
+
+async function salinLink() {
+    const hasil = document.getElementById("hasil");
+
+    if (!hasil.value) {
+        alert("Upload gambar dulu, bro!");
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(hasil.value);
+    } catch (error) {
+        hasil.select();
+        document.execCommand("copy");
+    }
+
+    alert("Link sudah disalin!");
+}
+</script>
+
+</body>
+</html>
